@@ -9,7 +9,10 @@ def AStar(gridMap: Map, iStart: int, jStart: int, iGoal: int, jGoal: int, hFunc=
     CLOSED = ClosedList()
     start = Node(iStart, jStart)
     OPEN.AddNode(start)
+    k = 0
+    #gridMap.Draw(Node(iStart, jStart), Node(iGoal, jGoal), [], CLOSED, OPEN, "MassiveTest/{}.png".format(k))
     while not OPEN.isEmpty():
+        k+=1
         curNode = OPEN.GetBestNode()
         CLOSED.AddNode(curNode)
         if ((curNode.i, curNode.j) == (iGoal, jGoal)):
@@ -24,6 +27,7 @@ def AStar(gridMap: Map, iStart: int, jStart: int, iGoal: int, jGoal: int, hFunc=
             if CLOSED.WasExpanded(newNode):
                 continue
             OPEN.AddNode(newNode)
+        #gridMap.Draw(Node(iStart, jStart), Node(iGoal, jGoal), [], CLOSED, OPEN, "MassiveTest/{}.png".format(k))
 
     return (False, None, CLOSED, OPEN)
 
@@ -80,7 +84,10 @@ def JPS(gridMap : Map, iStart : int, jStart : int, iGoal : int, jGoal : int, hFu
     start.h = hFunc(iStart, jStart, iGoal, jGoal),
     goal = Node(iGoal, jGoal, g = math.inf)
     OPEN.AddNode(start)
+    k = 0
+    #gridMap.Draw(Node(iStart, jStart), Node(iGoal, jGoal), [], CLOSED, OPEN, "MassiveTest/{}.png".format(k))
     while not OPEN.isEmpty():
+        k += 1
         curNode = OPEN.GetBestNode()
         CLOSED.AddNode(curNode)
         if (curNode == goal):
@@ -109,5 +116,6 @@ def JPS(gridMap : Map, iStart : int, jStart : int, iGoal : int, jGoal : int, hFu
                 if CLOSED.WasExpanded(newNode):
                     continue
                 OPEN.AddNode(newNode)
+        #gridMap.Draw(Node(iStart, jStart), Node(iGoal, jGoal), [], CLOSED, OPEN, "MassiveTest/{}.png".format(k))
 
     return (False, None, CLOSED, OPEN)

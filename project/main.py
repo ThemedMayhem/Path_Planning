@@ -1,4 +1,7 @@
 from random import randint
+
+import matplotlib.pyplot as plt
+
 from algs import *
 from Node import Node
 from Map import *
@@ -156,11 +159,13 @@ def MassiveTest(SearchFunction, *args):
     stat["len"] = []
     stat["nc"] = []
     stat["st"] = []
+    stat["time"] = []
     times = []
     taskNum = 9
     taskMap = Map()
     cor = 0
-    for taskCount in range(taskNum):#range(7, taskNum-1):
+    for taskCount in range(taskNum):
+        taskMap.visited.clear()
         taskFileName = "Data/" + str(taskCount) + ".map"
         width, height, cells, iStart, jStart, iGoal, jGoal, cardinalLength, diagonalLength = ReadTaskFromFile(
             taskFileName)
@@ -200,6 +205,7 @@ def MassiveTest(SearchFunction, *args):
             raise e.with_traceback(tb)
 
         finishTime = time.time()
+        stat["time"].append(finishTime - startTime)
         print('Execution time: {:5.3f} ms'.format((finishTime - startTime) * 1000))
         times.append(finishTime-startTime)
 
@@ -210,5 +216,41 @@ print("Simple Tests:")
 for i in range(25):
     SimpleTest(JPS, i, EuclideanDistance)
 
-print("\n\nMassive Tests:")
-MassiveTest(JPS, EuclideanDistance)
+print("\n\nMassive Tests JPS:")
+masJPS = MassiveTest(JPS, EuclideanDistance)
+#
+# print("\n\nMassive Tests AStar:")
+# masAStar = MassiveTest(AStar, EuclideanDistance)
+#
+# fig, axs = plt.subplots(3, 3, figsize=(15,10))
+# fig.suptitle('Average number of created nodes')
+# for i in range(9):
+#     ax = axs[i // 3, i % 3]
+#     ax.set_title(str(i) + " task")
+#     alg = ['A*', 'JPS']
+#     lens = [masAStar['nc'][i], masJPS['nc'][i]]
+#     ax.bar(alg, lens)
+# plt.savefig("Average number of created nodes.png")
+# plt.close()
+#
+# fig, axs = plt.subplots(3, 3, figsize=(15,10))
+# fig.suptitle('Average number of steps')
+# for i in range(9):
+#     ax = axs[i // 3, i % 3]
+#     ax.set_title(str(i) + " task")
+#     alg = ['A*', 'JPS']
+#     lens = [masAStar['st'][i], masJPS['st'][i]]
+#     ax.bar(alg, lens)
+# plt.savefig("Average number of steps.png")
+# plt.close()
+#
+# fig, axs = plt.subplots(3, 3, figsize=(15,10))
+# fig.suptitle('Average time')
+# for i in range(9):
+#     ax = axs[i // 3, i % 3]
+#     ax.set_title(str(i) + " task")
+#     alg = ['A*', 'JPS']
+#     lens = [masAStar['time'][i], masJPS['time'][i]]
+#     ax.bar(alg, lens)
+# plt.savefig("Average time.png")
+# plt.close()

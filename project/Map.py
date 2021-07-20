@@ -238,10 +238,6 @@ class Map:
                     else:
                         draw.rectangle((step.j * k, step.i * k, (step.j + 1) * k - 1, (step.i + 1) * k - 1),
                                        fill=(230, 126, 34), width=0)
-        if path is not None:
-            for i in range(len(path) - 1):
-                draw.line(((path[i].j + 0.5) * k, (path[i].i + 0.5) * k, (path[i+1].j + 0.5) * k, (path[i+1].i + 0.5) * k),
-                                       fill=(0, 0, 255), width=0)
 
         if (start is not None) and (self.Traversable((start.i, start.j))):
             draw.rectangle((start.j * k, start.i * k, (start.j + 1) * k - 1, (start.i + 1) * k - 1), fill=(40, 180, 99),
@@ -254,6 +250,11 @@ class Map:
         for i in self.visited:
             draw.rectangle((i[1] * k + int(k/3), i[0] * k + int(k/3), (i[1] + 1) * k - 1 - int(k/3), (i[0] + 1) * k - 1 - int(k/3)),
                            fill=(255, 255, 100), width=0)
+
+        if path is not None:
+            for i in range(len(path) - 1):
+                draw.line(((path[i].j + 0.5) * k, (path[i].i + 0.5) * k, (path[i+1].j + 0.5) * k, (path[i+1].i + 0.5) * k),
+                                       fill=(0, 0, 255), width=5)
 
         fig, ax = plt.subplots(dpi=300)
         ax.axes.xaxis.set_visible(False)
